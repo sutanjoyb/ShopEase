@@ -57,11 +57,11 @@ function ProductDetails() {
               </p>
               <div className="space-y-2 mb-6 text-gray-700">
                 <p className="text-lg">
-                  ⭐ Rating:{" "}
+                   Rating:{" "}
                   <span className="font-semibold">{product.rating}</span>
                 </p>
                 <p className="text-lg">
-                  📦 Category:{" "}
+                   Category:{" "}
                   <span className="font-semibold capitalize">
                     {product.category}
                   </span>
