@@ -6,7 +6,6 @@ import Footer from "../components/Footer";
 
 function Home() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [cartItems, setCartItems] = useState([]);
 
   const products = [
     {
@@ -46,29 +45,6 @@ function Home() {
   );
 
   const handleAddToCart = (product) => {
-    const existingItem = cartItems.find((item) => item.id === product.id);
-
-    if (existingItem) {
-      setCartItems(
-        cartItems.map((item) =>
-          item.id === product.id
-            ? {
-                ...item,
-                quantity: item.quantity + 1,
-              }
-            : item,
-        ),
-      );
-    } else {
-      setCartItems([
-        ...cartItems,
-        {
-          ...product,
-          quantity: 1,
-        },
-      ]);
-    }
-
     console.log("Added:", product.title);
   };
 
@@ -79,13 +55,9 @@ function Home() {
       <Hero />
 
       <section className="max-w-7xl mx-auto px-6 py-16">
-        <h2 className="text-4xl font-bold text-center mb-10 hover:tracking-widest transition-all duration-500">
+        <h2 className="text-4xl font-bold text-center mb-10">
           Featured Products
         </h2>
-
-        <p className="text-center text-xl font-semibold mb-6">
-          Cart Items: {cartItems.length}
-        </p>
 
         <div className="max-w-md mx-auto mb-10">
           <input
