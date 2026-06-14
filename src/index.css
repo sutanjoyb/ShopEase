@@ -1,8 +1,29 @@
 @import "tailwindcss";
-html {
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&family=Nunito:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap");
+
+@theme {
+  --font-poppins: "Poppins", sans-serif;
+  --font-montserrat: "Montserrat", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-nunito: "Nunito", sans-serif;
+  --font-outfit: "Outfit", sans-serif;
+  --font-playfair: "Playfair Display", serif;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-poppins);
+  background-color: #f9fafb;
+  color: #1f2937;
   scroll-behavior: smooth;
 }
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
-* {
-  font-family: "Poppins", sans-serif;
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
 }

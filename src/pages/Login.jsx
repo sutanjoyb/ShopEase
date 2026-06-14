@@ -4,20 +4,16 @@ import Footer from "../components/Footer";
 
 function Login() {
   const [isLogin, setIsLogin] = useState(true);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
   const [showPassword, setShowPassword] = useState(false);
-
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     setError("");
     setSuccess("");
 
@@ -25,47 +21,38 @@ function Login() {
       setError("Please enter a valid email.");
       return;
     }
-
     if (password.length < 6) {
       setError("Password must be at least 6 characters.");
       return;
     }
-
     if (!isLogin && password !== confirmPassword) {
       setError("Passwords do not match.");
       return;
     }
 
     setSuccess(isLogin ? "Login successful!" : "Registration successful!");
-
-    console.log({
-      fullName,
-      email,
-      password,
-    });
   };
 
   return (
-    <>
+    <div className="font-poppins min-h-screen flex flex-col">
       <Navbar />
 
       <div
-        className="min-h-screen flex items-center justify-center bg-cover bg-center px-4"
+        className="grow flex items-center justify-center bg-cover bg-center px-4 py-12"
         style={{
           backgroundImage:
             "url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=1600&q=80')",
         }}
       >
         <div className="bg-white/90 backdrop-blur-md w-full max-w-sm rounded-2xl shadow-2xl p-6">
-          <h1 className="text-3xl font-bold text-center text-blue-600 mb-2">
+          <h1 className="text-4xl font-bold text-center text-blue-600 mb-1 font-playfair">
             ShopEase
           </h1>
-
-          <p className="text-center text-gray-500 mb-6">
+          <p className="text-center text-gray-500 mb-6 text-sm">
             Find it. Love it. Shop it.
           </p>
 
-          <h2 className="text-2xl font-semibold text-center mb-6">
+          <h2 className="text-2xl font-semibold text-center mb-6 font-playfair">
             {isLogin ? "Login" : "Register"}
           </h2>
 
@@ -88,7 +75,7 @@ function Login() {
                 placeholder="Full Name"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="w-full border rounded-lg px-4 py-2"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
               />
             )}
 
@@ -97,7 +84,7 @@ function Login() {
               placeholder="Email Address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full border rounded-lg px-4 py-2"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
             />
 
             <div className="relative">
@@ -106,13 +93,12 @@ function Login() {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full border rounded-lg px-4 py-2"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
               />
-
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-2 text-sm text-blue-600"
+                className="absolute right-3 top-2.5 text-sm text-blue-600 font-medium cursor-pointer"
               >
                 {showPassword ? "Hide" : "Show"}
               </button>
@@ -124,13 +110,13 @@ function Login() {
                 placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full border rounded-lg px-4 py-2"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
               />
             )}
 
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition cursor-pointer font-medium"
             >
               {isLogin ? "Login" : "Register"}
             </button>
@@ -143,7 +129,7 @@ function Login() {
                 setError("");
                 setSuccess("");
               }}
-              className="text-blue-600 hover:underline"
+              className="text-blue-600 hover:underline text-sm font-medium cursor-pointer"
             >
               {isLogin ? "Create a new account" : "Already have an account?"}
             </button>
@@ -152,7 +138,7 @@ function Login() {
       </div>
 
       <Footer />
-    </>
+    </div>
   );
 }
 
