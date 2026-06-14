@@ -4,7 +4,7 @@ function Hero() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 text-white min-h-[80vh] flex items-center justify-center px-6 w-full font-montserrat">
+    <section className="relative overflow-hidden bg-linear-to-r from-blue-600 via-indigo-600 to-purple-700 text-white min-h-[80vh] flex items-center justify-center px-6 w-full font-montserrat">
       <div className="absolute top-10 left-10 w-72 h-72 bg-white/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-10 right-10 w-72 h-72 bg-white/10 rounded-full blur-3xl"></div>
 
