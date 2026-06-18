@@ -1,55 +1,220 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
+import { FaShoppingBag, FaTruck, FaShieldAlt, FaStar } from "react-icons/fa";
 
 function Hero() {
-  const navigate = useNavigate();
-
   return (
-    <section className="relative overflow-hidden bg-linear-to-r from-blue-600 via-indigo-600 to-purple-700 text-white min-h-[70vh] md:min-h-[80vh] flex items-center justify-center px-4 sm:px-6 w-full font-montserrat py-12 md:py-0">
-      <div className="absolute top-10 left-10 w-48 h-48 md:w-72 md:h-72 bg-white/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-10 right-10 w-48 h-48 md:w-72 md:h-72 bg-white/10 rounded-full blur-3xl"></div>
+    <section
+      className="
+        relative
+        overflow-hidden
+        bg-linear-to-r
+        from-blue-700
+        via-indigo-700
+        to-purple-700
+        text-white
+      "
+    >
 
-      <div className="text-center max-w-4xl z-10">
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-4 md:mb-6 tracking-tight">
-          Welcome to <span className="text-yellow-300">ShopEase</span>
-        </h1>
+      <div className="absolute inset-0 bg-black/20"></div>
 
-        <p className="text-lg md:text-2xl text-gray-100 mb-6 md:mb-8 leading-relaxed max-w-2xl mx-auto">
-          Discover amazing products, unbeatable deals, and a seamless shopping
-          experience — all in one place.
-        </p>
-
-        <div className="flex justify-center gap-3 sm:gap-4 flex-wrap">
-          <button
-            onClick={() => navigate("/products")}
-            className="bg-white text-blue-700 px-6 py-3 sm:px-8 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-xl hover:scale-105 hover:shadow-2xl transition-all duration-300 cursor-pointer"
-          >
-            Shop Now
-          </button>
-
-          <button
-            onClick={() => {
-              document.getElementById("about")?.scrollIntoView({
-                behavior: "smooth",
-              });
-            }}
-            className="border-2 border-white px-6 py-3 sm:px-8 sm:py-4 rounded-full font-bold text-base sm:text-lg hover:bg-white hover:text-blue-700 transition-all duration-300 cursor-pointer"
-          >
-            Learn More
-          </button>
-        </div>
-
-        <div className="mt-10 md:mt-12 flex justify-center gap-6 sm:gap-10 text-center">
+      <div className="relative max-w-7xl mx-auto px-6 py-24 md:py-32">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-bold">1000+</h2>
-            <p className="text-gray-200 text-xs sm:text-sm">Products</p>
+            <span
+              className="
+                bg-white/20
+                backdrop-blur-md
+                px-4
+                py-2
+                rounded-full
+                text-sm
+                font-semibold
+              "
+            >
+              #1 Online Shopping Destination
+            </span>
+
+            <h1
+              className="
+                text-5xl
+                md:text-7xl
+                font-extrabold
+                mt-6
+                leading-tight
+              "
+            >
+              Shop Smarter.
+              <br />
+              Live Better.
+            </h1>
+
+            <p
+              className="
+                text-lg
+                md:text-xl
+                text-blue-100
+                mt-6
+                leading-8
+                max-w-2xl
+              "
+            >
+              Discover thousands of premium products at unbeatable prices. Fast
+              delivery, secure payments, and an amazing shopping experience.
+            </p>
+
+            <div className="flex flex-wrap gap-4 mt-8">
+              <Link
+                to="/products"
+                className="
+                  bg-white
+                  text-blue-700
+                  px-8
+                  py-4
+                  rounded-xl
+                  font-bold
+                  hover:scale-105
+                  transition-all
+                  duration-300
+                "
+              >
+                Shop Now
+              </Link>
+
+              <a
+                href="#about"
+                className="
+                  border-2
+                  border-white
+                  px-8
+                  py-4
+                  rounded-xl
+                  font-bold
+                  hover:bg-white
+                  hover:text-blue-700
+                  transition-all
+                  duration-300
+                "
+              >
+                Learn More
+              </a>
+            </div>
+
+            <div className="grid grid-cols-3 gap-6 mt-12">
+              <div>
+                <h3 className="text-3xl font-extrabold">10K+</h3>
+                <p className="text-blue-100">Products</p>
+              </div>
+
+              <div>
+                <h3 className="text-3xl font-extrabold">5K+</h3>
+                <p className="text-blue-100">Customers</p>
+              </div>
+
+              <div>
+                <h3 className="text-3xl font-extrabold">99%</h3>
+                <p className="text-blue-100">Satisfaction</p>
+              </div>
+            </div>
           </div>
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-bold">500+</h2>
-            <p className="text-gray-200 text-xs sm:text-sm">Customers</p>
-          </div>
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-bold">24/7</h2>
-            <p className="text-gray-200 text-xs sm:text-sm">Support</p>
+
+          <div className="hidden lg:flex justify-center">
+            <div
+              className="
+                bg-white/10
+                backdrop-blur-lg
+                rounded-3xl
+                p-10
+                w-full
+                max-w-md
+                border
+                border-white/20
+              "
+            >
+              <div className="space-y-6">
+                <div
+                  className="
+                    flex
+                    items-center
+                    gap-4
+                    bg-white/10
+                    p-5
+                    rounded-2xl
+                  "
+                >
+                  <FaShoppingBag className="text-3xl" />
+
+                  <div>
+                    <h3 className="font-bold text-lg">Premium Products</h3>
+
+                    <p className="text-blue-100 text-sm">
+                      Carefully selected items.
+                    </p>
+                  </div>
+                </div>
+
+                <div
+                  className="
+                    flex
+                    items-center
+                    gap-4
+                    bg-white/10
+                    p-5
+                    rounded-2xl
+                  "
+                >
+                  <FaTruck className="text-3xl" />
+
+                  <div>
+                    <h3 className="font-bold text-lg">Fast Delivery</h3>
+
+                    <p className="text-blue-100 text-sm">
+                      Quick & reliable shipping.
+                    </p>
+                  </div>
+                </div>
+
+                <div
+                  className="
+                    flex
+                    items-center
+                    gap-4
+                    bg-white/10
+                    p-5
+                    rounded-2xl
+                  "
+                >
+                  <FaShieldAlt className="text-3xl" />
+
+                  <div>
+                    <h3 className="font-bold text-lg">Secure Payments</h3>
+
+                    <p className="text-blue-100 text-sm">
+                      100% protected checkout.
+                    </p>
+                  </div>
+                </div>
+
+                <div
+                  className="
+                    flex
+                    items-center
+                    gap-4
+                    bg-white/10
+                    p-5
+                    rounded-2xl
+                  "
+                >
+                  <FaStar className="text-3xl" />
+
+                  <div>
+                    <h3 className="font-bold text-lg">Top Rated</h3>
+
+                    <p className="text-blue-100 text-sm">Loved by thousands.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

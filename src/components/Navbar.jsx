@@ -1,126 +1,109 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useContext } from "react";
+
+import { CartContext } from "../context/CartContext";
+import { AuthContext } from "../context/AuthContext";
+
+import { FaShoppingCart, FaUser, FaStore, FaSignOutAlt } from "react-icons/fa";
 
 function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const { cartItems } = useContext(CartContext);
+  const { user, logout } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleLogout = () => {
+    logout();
+    if (location.pathname === "/cart") {
+      navigate("/login");
+    }
+  };
+
+ 
+  const handleLogoClick = (e) => {
+    if (location.pathname === "/") {
+      e.preventDefault(); 
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth", 
+      });
+    }
+  };
 
   return (
-    <nav className="sticky top-0 z-50 bg-white shadow-md w-full font-poppins">
-      {/* Main Navbar Container */}
-      <div className="relative flex items-center justify-between px-4 sm:px-8 py-4">
-        <div className="flex items-center md:hidden z-50">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            type="button"
-            className="text-gray-700 hover:text-blue-600 focus:outline-none cursor-pointer"
-            aria-label="Toggle navigation"
-          >
-            {isOpen ? (
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            ) : (
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            )}
-          </button>
-        </div>
-
-        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none md:pointer-events-auto md:static md:translate-y-0 md:items-start grow">
-          <div className="text-center md:text-left pointer-events-auto">
-            <h1 className="text-2xl md:text-3xl font-bold text-blue-600 tracking-tight leading-none">
-              ShopEase
-            </h1>
-            <p className="text-[10px] md:text-xs text-gray-500 mt-0.5 hidden sm:block">
-              Find it. Love it. Shop it.
-            </p>
+    <nav className="sticky top-0 z-50 bg-white shadow-md">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    
+        <Link
+          to="/"
+          onClick={handleLogoClick}
+          className="flex items-center gap-3 hover:scale-105 transition cursor-pointer"
+        >
+          <div className="bg-blue-600 p-3 rounded-xl text-white">
+            <FaStore className="text-xl" />
           </div>
-        </div>
 
-        <div className="hidden md:flex gap-6 text-base font-medium">
-          <Link
-            to="/"
-            className="hover:text-blue-600 transition-colors duration-200"
-          >
+          <div>
+            <h1 className="text-2xl font-extrabold text-gray-800">ShopEase</h1>
+            <p className="text-xs text-gray-500">Find it. Love it. Shop it.</p>
+          </div>
+        </Link>
+
+        <div className="hidden md:flex items-center gap-8 font-medium">
+          <Link to="/" className="hover:text-blue-600 transition">
             Home
           </Link>
-          <Link
-            to="/products"
-            className="hover:text-blue-600 transition-colors duration-200"
-          >
+
+          <Link to="/products" className="hover:text-blue-600 transition">
             Products
           </Link>
-          <Link
-            to="/cart"
-            className="hover:text-blue-600 transition-colors duration-200"
-          >
-            Cart
+
+          <Link to="/cart" className="relative hover:text-blue-600 transition">
+            <div className="flex items-center gap-2">
+              <FaShoppingCart />
+              <span>Cart</span>
+              {cartItems.length > 0 && (
+                <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full font-bold">
+                  {cartItems.length}
+                </span>
+              )}
+            </div>
           </Link>
-          <Link
-            to="/login"
-            className="hover:text-blue-600 transition-colors duration-200"
-          >
-            Login
-          </Link>
+
+          {user && (
+            <span className="text-blue-600 font-semibold">
+              Hi, {user.fullName}
+            </span>
+          )}
+
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-xl hover:bg-red-600 transition cursor-pointer"
+            >
+              <FaSignOutAlt />
+              Logout
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition"
+            >
+              <FaUser />
+              Login
+            </Link>
+          )}
         </div>
 
-        <div className="w-6 md:hidden"></div>
-      </div>
-
-      <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-gray-50 border-t border-gray-100 ${
-          isOpen ? "max-h-60 opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <div className="flex flex-col px-6 py-4 gap-4 font-medium text-gray-700">
-          <Link
-            to="/"
-            onClick={() => setIsOpen(false)}
-            className="hover:text-blue-600 py-1 transition-colors duration-200"
-          >
-            Home
-          </Link>
-          <Link
-            to="/products"
-            onClick={() => setIsOpen(false)}
-            className="hover:text-blue-600 py-1 transition-colors duration-200"
-          >
-            Products
-          </Link>
-          <Link
-            to="/cart"
-            onClick={() => setIsOpen(false)}
-            className="hover:text-blue-600 py-1 transition-colors duration-200"
-          >
-            Cart
-          </Link>
-          <Link
-            to="/login"
-            onClick={() => setIsOpen(false)}
-            className="hover:text-blue-600 py-1 transition-colors duration-200"
-          >
-            Login
+        <div className="md:hidden flex items-center gap-4">
+          <Link to="/cart" className="relative text-xl">
+            <FaShoppingCart />
+            {cartItems.length > 0 && (
+              <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs px-1.5 rounded-full">
+                {cartItems.length}
+              </span>
+            )}
           </Link>
         </div>
       </div>
