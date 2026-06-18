@@ -70,7 +70,7 @@ npm run dev
 
 Once the compilation completes, open your browser and navigate to [http://localhost:5173]
 
-### 4. 4. Create an Optimized Production Build
+### 4. Create an Optimized Production Build
 ```bash
 npm run build
 ```
