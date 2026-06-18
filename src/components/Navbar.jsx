@@ -41,40 +41,28 @@ function Navbar() {
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 md:py-4 flex justify-between items-center">
-        {/* Left Side: Mobile Hamburger Button & Logo Setup */}
-        <div className="flex items-center gap-3">
-          {/* Hamburger Icon Trigger (Visible on mobile only, pushes before title) */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden text-xl text-gray-700 focus:outline-none cursor-pointer"
-          >
-            {isMenuOpen ? <FaTimes /> : <FaBars />}
-          </button>
+        {/* Left Side: Logo Brand Structure (Tagline remains visible on mobile) */}
+        <Link
+          to="/"
+          onClick={handleLogoClick}
+          className="flex items-center gap-2 md:gap-3 hover:scale-102 transition cursor-pointer"
+        >
+          <div className="bg-blue-600 p-2 md:p-3 rounded-lg md:rounded-xl text-white">
+            <FaStore className="text-base md:text-xl" />
+          </div>
 
-          {/* Logo Brand Structure (Scales down on mobile devices) */}
-          <Link
-            to="/"
-            onClick={handleLogoClick}
-            className="flex items-center gap-2 md:gap-3 hover:scale-102 transition cursor-pointer"
-          >
-            {/* Small box container on mobile, medium on desktop */}
-            <div className="bg-blue-600 p-2 md:p-3 rounded-lg md:rounded-xl text-white">
-              <FaStore className="text-base md:text-xl" />
-            </div>
+          <div>
+            <h1 className="text-lg md:text-2xl font-extrabold text-gray-800 leading-tight">
+              ShopEase
+            </h1>
+            {/* Kept visible on all viewports without 'hidden sm:block' */}
+            <p className="text-[10px] md:text-xs text-gray-500">
+              Find it. Love it. Shop it.
+            </p>
+          </div>
+        </Link>
 
-            <div>
-              {/* text-lg on mobile, text-2xl on desktop */}
-              <h1 className="text-lg md:text-2xl font-extrabold text-gray-800 leading-tight">
-                ShopEase
-              </h1>
-              <p className="hidden sm:block text-[10px] md:text-xs text-gray-500">
-                Find it. Love it. Shop it.
-              </p>
-            </div>
-          </Link>
-        </div>
-
-        {/* Center/Right Desktop Menu Structures (Hidden on Mobile viewports) */}
+        {/* Center Menu: Standard Desktop Layout (Hidden on Mobile) */}
         <div className="hidden md:flex items-center gap-8 font-medium">
           <Link to="/" className="hover:text-blue-600 transition">
             Home
@@ -118,8 +106,9 @@ function Navbar() {
           )}
         </div>
 
-        {/* Right Side Only: Mobile Dedicated Cart Container */}
-        <div className="md:hidden flex items-center">
+        {/* Right Side: Mobile Layout Icons (Cart then Hamburger on extreme right) */}
+        <div className="md:hidden flex items-center gap-2">
+          {/* Mobile Cart Link */}
           <Link to="/cart" className="relative text-2xl text-gray-700 p-2">
             <FaShoppingCart />
             {cartItems.length > 0 && (
@@ -128,51 +117,95 @@ function Navbar() {
               </span>
             )}
           </Link>
+
+          {/* Hamburger Icon (Positioned at extreme right edge) */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="text-2xl text-gray-700 p-2 focus:outline-none cursor-pointer"
+          >
+            <FaBars />
+          </button>
         </div>
       </div>
 
-      {/* Hamburger Drawer/Dropdown panel for Mobile View options */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 px-6 py-4 space-y-4 font-medium flex flex-col shadow-inner">
-          <Link
-            to="/"
-            onClick={() => setIsMenuOpen(false)}
-            className="hover:text-blue-600 py-1 transition border-b border-gray-50"
-          >
-            Home
-          </Link>
-          <Link
-            to="/products"
-            onClick={() => setIsMenuOpen(false)}
-            className="hover:text-blue-600 py-1 transition border-b border-gray-50"
-          >
-            Products
-          </Link>
+      {/* Slide-out Mobile Navigation Drawer with Overlay System */}
+      <div
+        className={`fixed inset-0 z-50 md:hidden transition-all duration-300 ${
+          isMenuOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+      >
+        {/* Transparent dark background backdrop overlaying main screen */}
+        <div
+          onClick={() => setIsMenuOpen(false)}
+          className="absolute inset-0 bg-black/40 backdrop-blur-xs"
+        />
 
-          {user && (
-            <div className="text-blue-600 font-semibold pt-1">
-              Hi, {user.fullName}
+        {/* Dynamic drawer container panel animating strictly from the left */}
+        <div
+          className={`absolute inset-y-0 left-0 w-72 bg-white shadow-2xl p-6 flex flex-col justify-between transform transition-transform duration-300 ${
+            isMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
+          <div>
+            {/* Drawer Header section */}
+            <div className="flex items-center justify-between border-b pb-4 mb-6">
+              <span className="text-xl font-black text-gray-800">Menu</span>
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="text-xl text-gray-500 focus:outline-none cursor-pointer"
+              >
+                <FaTimes />
+              </button>
             </div>
-          )}
 
-          {user ? (
-            <button
-              onClick={handleLogout}
-              className="w-full flex items-center justify-center gap-2 bg-red-500 text-white px-4 py-2.5 rounded-xl hover:bg-red-600 transition cursor-pointer text-sm"
-            >
-              <FaSignOutAlt /> Logout
-            </button>
-          ) : (
-            <Link
-              to="/login"
-              onClick={() => setIsMenuOpen(false)}
-              className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2.5 rounded-xl hover:bg-blue-700 transition text-sm"
-            >
-              <FaUser /> Login
-            </Link>
-          )}
+            {/* Navigation links stack */}
+            <div className="flex flex-col space-y-4 font-medium">
+              <Link
+                to="/"
+                onClick={() => setIsMenuOpen(false)}
+                className="hover:text-blue-600 py-2 transition border-b border-gray-50 text-gray-700"
+              >
+                Home
+              </Link>
+              <Link
+                to="/products"
+                onClick={() => setIsMenuOpen(false)}
+                className="hover:text-blue-600 py-2 transition border-b border-gray-50 text-gray-700"
+              >
+                Products
+              </Link>
+            </div>
+          </div>
+
+          {/* Authentication area footer of the drawer */}
+          <div className="border-t pt-4 space-y-4">
+            {user && (
+              <div className="text-blue-600 font-semibold text-center">
+                Hi, {user.fullName}
+              </div>
+            )}
+
+            {user ? (
+              <button
+                onClick={handleLogout}
+                className="w-full flex items-center justify-center gap-2 bg-red-500 text-white px-4 py-2.5 rounded-xl hover:bg-red-600 transition cursor-pointer text-sm font-medium shadow-xs"
+              >
+                <FaSignOutAlt /> Logout
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                onClick={() => setIsMenuOpen(false)}
+                className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2.5 rounded-xl hover:bg-blue-700 transition text-sm font-medium shadow-xs"
+              >
+                <FaUser /> Login
+              </Link>
+            )}
+          </div>
         </div>
-      )}
+      </div>
     </nav>
   );
 }
