@@ -20,7 +20,6 @@ function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // State to manage mobile menu open/close toggle
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogout = () => {
@@ -40,23 +39,24 @@ function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 md:py-4 flex justify-between items-center">
-        {/* Left Side: Logo Brand Structure (Tagline remains visible on mobile) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 md:py-4 flex justify-between items-center">
+        {/* Left Side: Scaled Down Logo Brand Structure */}
         <Link
           to="/"
           onClick={handleLogoClick}
           className="flex items-center gap-2 md:gap-3 hover:scale-102 transition cursor-pointer"
         >
-          <div className="bg-blue-600 p-2 md:p-3 rounded-lg md:rounded-xl text-white">
-            <FaStore className="text-base md:text-xl" />
+          {/* Smaller padding on mobile (p-1.5) vs desktop (md:p-3) */}
+          <div className="bg-blue-600 p-1.5 md:p-3 rounded-lg md:rounded-xl text-white">
+            <FaStore className="text-sm md:text-xl" />
           </div>
 
           <div>
-            <h1 className="text-lg md:text-2xl font-extrabold text-gray-800 leading-tight">
+            {/* Decreased mobile size from text-lg to text-base */}
+            <h1 className="text-base md:text-2xl font-extrabold text-gray-800 leading-tight">
               ShopEase
             </h1>
-            {/* Kept visible on all viewports without 'hidden sm:block' */}
-            <p className="text-[10px] md:text-xs text-gray-500">
+            <p className="text-[9px] md:text-xs text-gray-500 tracking-tight">
               Find it. Love it. Shop it.
             </p>
           </div>
@@ -106,22 +106,25 @@ function Navbar() {
           )}
         </div>
 
-        {/* Right Side: Mobile Layout Icons (Cart then Hamburger on extreme right) */}
-        <div className="md:hidden flex items-center gap-2">
+        {/* Right Side: Perfectly Aligned Mobile Actions (Cart + Hamburger) */}
+        <div className="md:hidden flex items-center gap-1">
           {/* Mobile Cart Link */}
-          <Link to="/cart" className="relative text-2xl text-gray-700 p-2">
+          <Link
+            to="/cart"
+            className="relative text-xl text-gray-700 p-2 flex items-center justify-center"
+          >
             <FaShoppingCart />
             {cartItems.length > 0 && (
-              <span className="absolute top-0 right-0 bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">
+              <span className="absolute top-1 right-1 bg-red-500 text-white text-[9px] w-4.5 h-4.5 flex items-center justify-center rounded-full font-bold">
                 {cartItems.length}
               </span>
             )}
           </Link>
 
-          {/* Hamburger Icon (Positioned at extreme right edge) */}
+          {/* Hamburger Icon */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="text-2xl text-gray-700 p-2 focus:outline-none cursor-pointer"
+            className="text-xl text-gray-700 p-2 focus:outline-none cursor-pointer flex items-center justify-center"
           >
             <FaBars />
           </button>
@@ -136,20 +139,17 @@ function Navbar() {
             : "opacity-0 pointer-events-none"
         }`}
       >
-        {/* Transparent dark background backdrop overlaying main screen */}
         <div
           onClick={() => setIsMenuOpen(false)}
           className="absolute inset-0 bg-black/40 backdrop-blur-xs"
         />
 
-        {/* Dynamic drawer container panel animating strictly from the left */}
         <div
           className={`absolute inset-y-0 left-0 w-72 bg-white shadow-2xl p-6 flex flex-col justify-between transform transition-transform duration-300 ${
             isMenuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
           <div>
-            {/* Drawer Header section */}
             <div className="flex items-center justify-between border-b pb-4 mb-6">
               <span className="text-xl font-black text-gray-800">Menu</span>
               <button
@@ -160,7 +160,6 @@ function Navbar() {
               </button>
             </div>
 
-            {/* Navigation links stack */}
             <div className="flex flex-col space-y-4 font-medium">
               <Link
                 to="/"
@@ -179,7 +178,6 @@ function Navbar() {
             </div>
           </div>
 
-          {/* Authentication area footer of the drawer */}
           <div className="border-t pt-4 space-y-4">
             {user && (
               <div className="text-blue-600 font-semibold text-center">
