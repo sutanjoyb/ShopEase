@@ -69,7 +69,6 @@ function Login() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-
             <div>
               <label className="block mb-1.5 text-sm font-medium text-slate-700">
                 Full Name <span className="text-red-500 font-bold">*</span>
@@ -211,7 +210,6 @@ function Login() {
               </div>
             </div>
 
-         
             <div className="flex items-center justify-between text-sm">
               <label className="flex items-center gap-2 text-slate-600 cursor-pointer select-none">
                 <input
@@ -230,7 +228,6 @@ function Login() {
               </a>
             </div>
 
-            
             <button
               type="submit"
               className="w-full mt-2 bg-blue-600 text-white py-2.5 rounded-xl font-semibold shadow-md shadow-blue-500/10 hover:bg-blue-700 active:scale-[0.99] transition cursor-pointer text-center text-sm"
@@ -240,7 +237,7 @@ function Login() {
           </form>
 
           <div className="mt-6 text-center text-xs text-slate-400">
-            Demo Login System using Context API & LocalStorage.
+            Note: Type your Name, Email, and Password, then click on Sign In.
           </div>
         </div>
       </main>
