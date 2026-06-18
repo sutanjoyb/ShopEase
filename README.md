@@ -55,7 +55,7 @@ Follow these quick steps to get a local copy of ShopEase up and running on your 
 ### 1. Clone the Repository
 ```bash
 git clone [https://github.com/sutanjoyb/ShopEase.git](https://github.com/sutanjoyb/ShopEase.git)
-cd shopease
+cd ShopEase
 ```
 
 ### 2. Install Project Dependencies
