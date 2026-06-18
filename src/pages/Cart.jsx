@@ -1,20 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { CartContext } from "../context/CartContext";
 
 function Cart() {
-  const [cartItems, setCartItems] = useState([]);
-
-  useEffect(() => {
-    const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
-    setCartItems(savedCart);
-  }, []);
-
-  const removeFromCart = (indexToRemove) => {
-    const updatedCart = cartItems.filter((_, index) => index !== indexToRemove);
-    setCartItems(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
-  };
+  const { cartItems, removeFromCart } = useContext(CartContext);
 
   const totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
 
@@ -45,10 +35,12 @@ function Cart() {
                       alt={item.title}
                       className="w-16 h-16 sm:w-24 sm:h-24 object-cover rounded-lg shrink-0"
                     />
+
                     <div>
-                      <h2 className="text-lg md:text-xl font-semibold line-clamp-1">
+                      <h2 className="text-lg md:text-xl font-semibold">
                         {item.title}
                       </h2>
+
                       <p className="text-blue-600 font-bold text-base md:text-lg">
                         ${item.price}
                       </p>
@@ -57,7 +49,7 @@ function Cart() {
 
                   <button
                     onClick={() => removeFromCart(index)}
-                    className="w-full sm:w-auto bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition cursor-pointer text-sm"
+                    className="w-full sm:w-auto bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition cursor-pointer"
                   >
                     Remove
                   </button>
@@ -69,10 +61,12 @@ function Cart() {
               <h2 className="text-xl md:text-2xl font-bold mb-2 md:mb-3">
                 Cart Summary
               </h2>
+
               <p className="text-base md:text-lg">
                 Total Items: {cartItems.length}
               </p>
-              <p className="text-xl md:text-2xl font-bold text-blue-600 mt-1 md:mt-2">
+
+              <p className="text-xl md:text-2xl font-bold text-blue-600 mt-2">
                 Total Price: ${totalPrice.toFixed(2)}
               </p>
             </div>

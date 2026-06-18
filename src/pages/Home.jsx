@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import ProductCard from "../components/ProductCard";
 import Footer from "../components/Footer";
+import { CartContext } from "../context/CartContext";
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -10,13 +11,20 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("all");
 
+  const { addToCart } = useContext(CartContext);
+
   const fetchProducts = async () => {
     try {
       const response = await fetch("https://dummyjson.com/products");
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch products");
+      }
+
       const data = await response.json();
       setProducts(data.products);
     } catch (error) {
-      console.log("ERROR:", error);
+      console.error("ERROR:", error);
     } finally {
       setLoading(false);
     }
@@ -44,13 +52,6 @@ function Home() {
       </div>
     );
   }
-
-  const addToCart = (product) => {
-    const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-    existingCart.push(product);
-    localStorage.setItem("cart", JSON.stringify(existingCart));
-    alert(`${product.title} added to cart`);
-  };
 
   return (
     <div className="font-montserrat min-h-screen flex flex-col">
@@ -113,6 +114,7 @@ function Home() {
             <h2 className="text-5xl font-bold mb-6 text-gray-800 hover:scale-105 transition duration-500">
               About ShopEase
             </h2>
+
             <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-8">
               ShopEase is your trusted destination for discovering quality
               products at affordable prices. Designed with simplicity and
@@ -151,6 +153,7 @@ function Home() {
             <h3 className="text-3xl font-bold mb-4">
               Why Customers Choose ShopEase?
             </h3>
+
             <p className="text-gray-600 text-lg leading-8 max-w-4xl mx-auto">
               With a clean interface, trusted products, secure checkout, and
               customer-first approach, ShopEase makes online shopping simple,

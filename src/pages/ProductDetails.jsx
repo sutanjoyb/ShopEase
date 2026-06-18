@@ -1,11 +1,15 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { CartContext } from "../context/CartContext";
 
 function ProductDetails() {
   const { id } = useParams();
+
   const [product, setProduct] = useState(null);
+
+  const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
     fetch(`https://dummyjson.com/products/${id}`)
@@ -14,24 +18,16 @@ function ProductDetails() {
       .catch((error) => console.log(error));
   }, [id]);
 
-  const addToCart = () => {
-    if (!product) return;
-    const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-    existingCart.push(product);
-    localStorage.setItem("cart", JSON.stringify(existingCart));
-    alert(`${product.title} added to cart!`);
-  };
-
   if (!product) {
     return (
-      <div className="min-h-screen flex justify-center items-center text-3xl font-bold font-outfit">
+      <div className="min-h-screen flex justify-center items-center text-3xl font-bold">
         Loading Product...
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 font-outfit">
+    <div className="min-h-screen flex flex-col bg-gray-50 font-montserrat">
       <Navbar />
 
       <main className="grow flex items-center">
@@ -49,27 +45,34 @@ function ProductDetails() {
               <h1 className="text-4xl font-bold mb-4 text-gray-900">
                 {product.title}
               </h1>
+
               <p className="text-gray-600 text-lg mb-6 leading-relaxed">
                 {product.description}
               </p>
+
               <p className="text-3xl font-bold text-blue-600 mb-4">
                 ${product.price}
               </p>
+
               <div className="space-y-2 mb-6 text-gray-700">
                 <p className="text-lg">
-                   Rating:{" "}
-                  <span className="font-semibold">{product.rating}</span>
+                   Rating:
+                  <span className="font-semibold ml-2">{product.rating}</span>
                 </p>
+
                 <p className="text-lg">
-                   Category:{" "}
-                  <span className="font-semibold capitalize">
+                   Category:
+                  <span className="font-semibold ml-2 capitalize">
                     {product.category}
                   </span>
                 </p>
               </div>
 
               <button
-                onClick={addToCart}
+                onClick={() => {
+                  addToCart(product);
+                  alert(`${product.title} added to cart!`);
+                }}
                 className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 hover:scale-105 cursor-pointer font-semibold"
               >
                 Add To Cart

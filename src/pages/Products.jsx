@@ -1,13 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
 import Footer from "../components/Footer";
+import { CartContext } from "../context/CartContext";
 
 function Products() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+
+  const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
     fetch("https://dummyjson.com/products")
@@ -22,13 +25,6 @@ function Products() {
       });
   }, []);
 
-  const addToCart = (product) => {
-    const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-    existingCart.push(product);
-    localStorage.setItem("cart", JSON.stringify(existingCart));
-    alert(`${product.title} added to cart`);
-  };
-
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.title
       .toLowerCase()
@@ -42,14 +38,14 @@ function Products() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex justify-center items-center text-3xl font-bold font-inter">
+      <div className="min-h-screen flex justify-center items-center text-3xl font-bold">
         Loading Products...
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 font-inter">
+    <div className="min-h-screen flex flex-col font-montserrat">
       <Navbar />
 
       <main className="grow max-w-7xl mx-auto px-6 py-10 w-full">
