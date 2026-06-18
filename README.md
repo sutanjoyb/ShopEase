@@ -48,7 +48,7 @@ src/
 ```
 ---
 
-## 🔧 Installation & Setup
+##  Installation & Setup
 
 Follow these quick steps to get a local copy of ShopEase up and running on your machine:
 
